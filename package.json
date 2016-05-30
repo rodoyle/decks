@@ -1,0 +1,28 @@
+{
+  "name": "decks",
+  "version": "1.0.0",
+  "description": "Source code for generating public presentations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rodoyle/decks.git"
+  },
+  "keywords": [
+    "revealjs",
+    "presentations",
+    "crispr"
+  ],
+  "author": "Riley Doyle",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/rodoyle/decks/issues"
+  },
+  "homepage": "https://github.com/rodoyle/decks#readme",
+  "dependencies": {
+    "pug": "^2.0.0-alpha8",
+    "reveal": "0.0.4"
+  }
+}
