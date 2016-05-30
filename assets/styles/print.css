@@ -1,0 +1,16 @@
+
+*{
+  -webkit-print-color-adjust: exact;
+}
+
+@page{
+/* These rules will only be applied in the printed (print preview) version*/
+  margin: 2cm;
+}
+
+@page:first{
+  margin: 2cm;
+}
+
+
+

@@ -1,0 +1,4 @@
+{#Wraps a section of Markdown in a swig template partial#}
+<section id="{{ filename }}">
+    {%  markdown %}{{ content|safe}} {% endmarkdown %}
+</section>

@@ -1,0 +1,7 @@
+{% for feature in features %}
+
+<li> {{ feature.number }} {{ feature.title }}
+    <p> {{ feature.description }} </p>
+    {% for scenario in feature.scenarios %}
+    <code>{{ scenario }}</code>
+</li>

@@ -1,0 +1,122 @@
+*{
+  -webkit-print-color-adjust: exact;
+}
+
+#pageHeader{
+    content: "commercial in confidence";
+    position: running(pageHeader);
+}
+
+
+body {
+    margin: 0 auto !important;
+    border: 0;
+    padding: 0;
+    float: none !important;
+    overflow: visible;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+body{
+    font-family: 'Droid Sans', sans-serif;
+}
+
+section{
+  page-break-after: always !important;
+}
+header{
+  background-color: #ECF0F1;
+  width: 100%;
+  font-variant: small-caps;
+}
+
+footer{
+    margin-top: 10%;
+ text-align: center;
+ color: #bdc3c7;
+ bottom: 0px;
+}
+
+h1{
+    font-variant: small-caps;
+    color: #1e1e1e;
+  font-size: 32pt;
+}
+
+h2{
+    font-size: 20pt;
+}
+
+p{
+    font-family: 'Noto Sans', sans-serif;
+}
+
+table{
+ color: #1e1e1e;
+ font-family: 'Droid Sans';
+ font-size: 12pt;
+ border-collapse: collapse;
+}
+
+thead{
+    background-color: #00BAE9;
+}
+
+th{
+    color: #f6f6f6;
+    font-variant: small-caps;
+    font-weight: normal; 
+    background-color: #00BAE9;
+}
+
+th.col{
+    padding-right: 1em;
+    padding-left: 1em;
+    text-align: center;
+}
+
+th.money{
+    padding-left: 1em;
+    text-align: right;
+}
+
+th.row{
+    text-align: left;
+    color: #1e1e1e;
+    background-color:#ecf0f1;
+}
+
+
+td{
+ vertical-align: middle;
+ text-align: center;
+}
+
+td.money{
+  text-align: right;
+}
+.quote-title-page table{
+    width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;  
+  text-align: left;
+  margin-top: 10%;
+}
+
+.quote-title-page td{
+    vertical-align:text-top;
+    text-align: left;
+}
+
+.quote-title-page h1{
+    text-align: center;
+}
+
+img.big-logo {
+ height: 150px;
+}
