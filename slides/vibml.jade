@@ -1,0 +1,359 @@
+html
+    head
+        meta(charset="utf-8")
+        title Optimising CRISPR Genome Editing using Machine Learning
+        meta(name="author" content="Riley Doyle")
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        link(rel="stylesheet" href="main.css")
+    body
+        .reveal
+            .slides
+                // Use include to bring in slides here
+                section.cover-slide
+                    // cover slide
+                    h1 Optimizing CRISPR Genome Editing using Maching Learning
+                    p.author
+                        Riley Doyle, CEO and Technical Lead
+                    p.date
+                        January 2016
+                // introduction
+                section
+                    header
+                        h2 Desktop Genetics
+                        h3 Helping you manipulate genomes
+                    img(src="images/deskgen-logo.svg")
+                    p Cloud Software
+                    img(src="images/advanced-genomics.png")
+                    p Advanced<br/>Genomics
+                    img(src="images/enevolv-logo.png")
+                    img(src="imgages/cnio-logo.png")
+                    img(src="images/horizon-logo.png")
+                    img(src="images/editas-logo.png")
+                    footer
+                        img(src="images/desktop-genetics-workmark.svg")
+                        p 2
+                section
+                    header
+                        h2 Literal Desktop Genetics
+                        h3 Our vision for cloud biology
+                    p Enabling you to conduct start-to-finish gene editing from your computer
+                    div.image-container
+                        img(src="images/editing-workflow.png")
+                    ul
+                        li We pick the best partners
+                        li Highly flexible
+                        li Seamless gene editing experience
+                section
+                    header
+                        h2 Agenda
+                    ol
+                        li Brief intro to CRISPR and Machine Learning
+                        li Our sgRNA design process
+                        li "Mybusters": evaluating decision rules and scoring functions
+                        li The path forward
+                section
+                    header
+                        h2 CRISPR/Cas9
+                        h3 "The Biggest Biotech Discovery of the Century"
+                    p Genome editing takes off
+                    img("images/mit-tech-review-chart.jpg")
+                    table
+                        thead
+                            tr
+                                th 2015
+                                th
+                                th 2020E
+                        tbody
+                            tr
+                                td 20,000 - 40,000
+                                td img(src="images/flasks-png")
+                                td 30,000 - 66,000 labs
+                            tr
+                                td 250,000 - 600,000 experiments
+                                td img(src="images/microscope.jpg")
+                                td 376,000 - 3,400,000 experiments
+                    p [source: triangulated from DTG, HZD, and Addgene numbers]
+                section
+                    header
+                        h2 Recurring CRISPR Problems
+                        h3 User analytics revealed common problems
+                    table
+                        thead
+                            tr
+                                th
+                                th Human
+                                th Machine
+                        tbody
+                            tr
+                                td Guide selection
+                                td Bias towards 5' sense-strand guides
+                                td Considers all guides, chooses consistently
+                            tr
+                                td Scoring function(s)
+                                td Undue weight given to some scoring function(s)
+                                td Weights of scoring functions carefully controlled
+                            tr
+                                td Genotype data
+                                td Considers only reference genome or sanger sequence
+                                td Considers full NGS genotype of target cell line
+                            tr
+                                td Overall objective
+                                td Few "winning" guides
+                                td Balanced, orthogonal guide set
+                section
+                    header
+                        h2 (Statistical) Machine Learning
+                        h3 Biological ML has distinct challenges
+                    table
+                        thead
+                            tr
+                                th Stage
+                                th Video game
+                                th EcoRI
+                                th CRISPR
+                        tbody
+                            tr
+                                td Data set
+                                td 1E5 instances of game played in parallel in hours
+                                td Buy or clone 1E4-1E5 plasmids //Plasmids are overkill ... but you don't know this a priori
+                                td Synthesize 1E4-1E9 guides
+                           tr
+                               td Assessment
+                               td Instant output of numerical score
+                               td Run digests, photograph, score by hand // much better assay possible on Mass Spec
+                               td Develop assay to screen 1E4-1E9 guides 3-10x
+                          tr
+                              td Features
+                              td Screen resolution and controller inputs
+                              td 6321 position-independent motifs // 4**6 + 4**5 + ...
+                              td Unknown, est. 3.8E8 plus cell and protocol effects in worst case
+                          tr
+                              td Modeling // this is weak
+                              td Many models tried in parallel
+                              td 5 lines of code
+                              td Unkown
+                          tr
+                              td Evaluation
+                              td Replay game
+                              td Repeat on new plasmid
+                              td Repeat on new guides
+                        tr
+                            td Generalizability
+                            td Repeat for each game
+                            td Repeat for each nuclease
+                            td Unknown (sgRNA and crRNA may have different rules)
+                section
+                    header
+                        h2 DNA Sequence Features
+                        h2 n-gram approach plagued by curse of dimensionality
+                    p Number of non-overlapping position-dependent features given by
+                    div.equation
+                        p SUM(4**k * (n/k))
+                    p Doench 2014 uses 314 single and doublet features (dimensions)
+                    p Too many features + insufficient data = overfitting
+                    div.chart  //Time for D3?
+                        svg#cummulative-features-vs-k(data-bind="cummulative-features-vs-svg.json")  //associate data with the charts svg element
+                section
+                    header
+                        h2 Guide RNA Features
+                        h3 Design rules efficiently turn sequences in to lists of numbers
+                    p asking a series of questions about the guide and recording the answer in a list is better
+                    div.image-container
+                        img(src="images/ecori-site.svg")
+                        img(src="images/decision-rules.svg")
+                        p.equation#ecori-vector
+                    p Now feed this vector into classifier code
+                    p Regression model should be used for guide activity
+                section
+                    header
+                        h2 Designing Bad Guides
+                        h3 Library must balance generalizability and variance
+                    p Orthogonal guides are distinct, un-corelated, and span a range of property values
+                    p This makes the data generalizable
+                    p Replicate guides have similar values for some properties so variance can be averaged out // right word?
+                    svg#idealized-outcome
+                        rect(color="white" x=0, y=0, height=150px, width=150px)
+                section
+                    header
+                        h2 Building a training set
+                        h3 Selecting guides to evaluate negative predictors
+                    table
+                        thead
+                            tr
+                                th Design rule
+                                th Considers
+                                th Range
+                                th Count
+                        tbody
+                            tr
+                                td NAG PAM (negative control)
+                                td (PAM) Sequence
+                                td {0,1}
+                                td 123
+                            tr
+                                td GC Content
+                                td Sequence
+                                td [0,1]
+                                td 123
+                            tr
+                                td Homopolymer (N4)
+                                td Sequence
+                                td {0,1}
+                                td 123
+                            tr
+                                td SNP Collision
+                                td (Genome) Sequence
+                                td {0,1}
+                                td 123
+                            tr
+                                td UUU Triplet
+                                td Sequence
+                                td {0,1}
+                                td 123
+                            tr
+                                td Non-constitutive exon
+                                td Location
+                                td {0,1}
+                                td 123
+            section
+                header
+                    h2 Postive Predictors
+                    h3 Incorporating positive predictors into our training data set
+                table
+                    thead
+                        tr
+                            th Predictor
+                            th Considers
+                            th Range
+                            th Count
+                    tbody
+                        tr
+                            td Prior Validation (positive control)
+                            td History
+                            td [0,1]  // performance is continuous not categorical
+                            td Count
+                        tr
+                            td Essential target gene
+                            td Location
+                            td [0,1] //Essentiallity assumed discrete here but it's continuous
+                            td Count
+                        tr
+                            td Chari et al. 2015
+                            td Sequence
+                            td [0,1]
+                            td Count
+                        tr
+                            td Doench et al 2014
+                            td Sequence
+                            td [0,1]
+                            td Count
+                        tr
+                            td Hsu et al. 2013
+                            td (Genome) Sequence
+                            td [0,1]
+                            td count
+                        tr
+                            td Functional Domain
+                            td Location
+                            td {0,1}
+                            td count
+                        tr
+                            td Truncated Guide
+                            td Sequence
+                            td {0,1}
+                            td count
+                section
+                    header
+                        h2 Efficient Informatics
+                        h3 Enable parallel evaluation of multiple hypotheses
+                    svg#simple-platform-diagram
+                    p
+                        All models can access common structured, indexed, normalized guide RNA and cell line genotype data while being evaluated in parallel.
+                section
+                    header
+                        h2 Functional Guide Assay
+                        h3 Correlate guide activity to depletion in population
+                    svg#depletion-assay-diagram
+
+                // results
+                section
+                    header
+                        h2 Activity Distribution
+                        h3 High variance observed with shifts in of population
+                    img(src="images/uracil-triplet-effect.png")
+                section
+                    header
+                        h2 Negative selectors rules were very effective
+                        h3 Which guides won't work appears to be easier question
+                    ol
+                        li GC content
+                            img(src="images/gc-content-effect.jpg")
+                        li Homopolymers
+                            img(src="images/homopolyer-effect.jpg")
+                        li UUU triplet
+                            img(src="images/uracil-triplet-effect.jpg")
+                        li Nonconsitutive exon
+                            img(src="images/nonconstitutive-exon.jpg")
+                section
+                    header
+                        h2 Genotype and off-targets
+                        h3 Promiscuous guides appear to be more functional
+                    img(src="images/")
+                section
+                    header
+                        h2 SNPs modulate activity through off-targets
+                        h3 Off-targets may be genotoxic and appear more active
+                    li SNP in guide seed region
+                        img(src="images/snp-in-seed-region-effect.jpg")
+                section
+                    header
+                        h2 Postive selectors had mixed results
+                    ol
+                        li Logistic Regression (Doench 2014)
+                            img(src="images/doench2014-effect.jpg")
+                        li Support Vector Machine (Chari 2015)
+                            img(src="images/chari2015-effect.jpg")
+                        li Functional Domains
+                            img(src="images/functional-domain-effect.jpg")
+                        li CDS Position
+                            img(src="images/cds-position-effect.jpg")
+
+                section
+                    header
+                        h2 Combining many decision rules yielded a better guide population
+                    img(src="images/combined-decision-rules.jpg")
+                section
+                    header
+                        h2 Several sources of significant variance were identified
+                        h3 Normalizing across experiments remains tricky
+                    ol
+                        li Target Cell line, genome, and gene (guide enrichment)
+                        li Choice of depletion time point (Protocol)
+                        li Choice of delivery vector
+                        li Bioinformatician (analysis methodology)
+                section
+                    header
+                        h2 Machine-designed guides outperformed manual designs
+                        h3 Result see with several different ML-based approaches
+                    img(src="images/manual-guides.jpg")
+                section
+                    header
+                        h2 Conclusions
+                    ol
+                        li Many factors contribute to variance in guide performance
+                        li Several groups have shown machine-generated guides more effective
+                        li It appears easier to eliminate guides than pick them
+                        li Combining scoring functions appears to improve overall outcome
+                section
+                    header
+                        h2 Future work
+                    ol
+                        li Confirm guide performance with orthogonal assay
+                        li Train model(s) to apply different weights to guide features
+                        li Gather more guide performance data
+                        li Public interface to guide performance database coming soon
+                section
+                    include ../slides/questions.html
+        script(src="bundle.js")
